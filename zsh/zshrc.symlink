@@ -1,0 +1,30 @@
+source $HOME/.antigen/antigen.zsh
+
+# Load the oh-my-zsh library
+antigen use oh-my-zsh
+
+# Load antigen bundles
+antigen bundles <<EOBUNDLES
+    # Guess what to install when running an unknown command
+    command-not-found
+
+    # Git helpers and autocompletion
+    git
+
+    # Syntax highlighting
+    zsh-users/zsh-syntax-highlighting
+EOBUNDLES
+
+# Load the theme
+antigen theme ys
+
+# Tell antigen you're done
+antigen apply
+
+export NVM_DIR="/home/dan/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+export PATH="$PATH:$HOME/.rvm/bin:$HOME/.composer/vendor/bin" # Add RVM to PATH for scripting
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[[ -r "$HOME/.rvm/scripts/completion" ]] && source "$HOME/.rvm/scripts/completion"

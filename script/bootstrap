@@ -1,0 +1,165 @@
+#!/usr/bin/env bash
+#
+# bootstrap installs things.
+
+cd "$(dirname "$0")/.."
+DOTFILES_ROOT=$(pwd)
+ANTIGEN_ROOT=$HOME/.antigen
+
+UNAME_LINUX="Linux"
+UNAME_MAC="Darwin"
+
+set -e
+
+echo ''
+
+info () {
+    printf "  [ \033[00;34m..\033[0m ] $1\n"
+}
+
+user () {
+    printf "\r  [ \033[00;33m?\033[0m ] $1 "
+}
+
+success () {
+    printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+install_git () {
+    git --version 2>&1 >/dev/null
+    GIT_IS_AVAILABLE=$?
+    if [ ! $GIT_IS_AVAILABLE -eq 0 ]
+    then
+        if [ "$(uname -s)" == $UNAME_MAC ]
+        then
+            # do something
+        elif [ "$(uname -s)" == *ARCH ]
+        then
+            sudo pacman -S git
+        else
+            sudo apt-get install git
+        fi
+    fi
+}
+
+setup_gitconfig () {
+    if ! [ -f git/gitconfig.symlink ]
+    then
+        info 'setup gitconfig'
+        git_credential='cache'
+
+        if [ "$(uname -s)" == $UNAME_MAC ]
+        then
+            git_credential='osxkeychain'
+        fi
+
+        user ' - What is your github author name ? '
+        read -e git_authorname
+        user ' - What is your github author email ? '
+        read -e git_authoremail
+
+        sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.symlink.example > git/gitconfig.symlink
+
+        success 'gitconfig'
+    fi
+}
+
+link_file () {
+    local src=$1 dst=$2
+
+    local overwrite= backup= skip=
+    local action=
+
+    if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
+    then
+        if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
+        then
+            local currentSrc="$(readlink $dst)"
+
+            if [ "$currentSrc" == "$src" ]
+            then
+                skip=true;
+            else
+                user "File already exists: $dst ($(basename "$src")), what do you want to do ?\n\
+                [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all ?"
+                read -n 1 action
+
+                case "$action" in
+                    o )
+                        overwrite=true;;
+                    O )
+                        overwrite_all=true;;
+                    b )
+                        backup=true;;
+                    B )
+                        backup_all=true;;
+                    o )
+                        skip=true;;
+                    O )
+                        skip_all=true;;
+                    * )
+                        ;;
+                esac
+            fi
+        fi
+
+        overwrite=${overwrite:-$overwrite_all}
+        backup=${backup:-$backup_all}
+        skip=${skip:-$skip_all}
+
+        if [ "$overwrite" == "true" ]
+        then
+            rm -rf "$dst"
+            success "removed $dst"
+        fi
+
+        if [ "$backup" == "true" ]
+        then
+            mv "$dst" "${dst}.backup"
+            success "moved $dst to ${dst}.backup"
+        fi
+
+        if [ "$skip" == "true" ]
+        then
+            success "skipped $src"
+        fi
+    fi
+
+    if [ "$skip" != "true" ] # "false" or empty
+    then
+        ln -s "$1" "$2"
+        success "linked $1 to $2"
+    fi
+}
+
+install_dotfiles () {
+    info 'installing dotfiles'
+
+    local overwrite_all=false backup_all=false skip_all=false
+
+    for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink')
+    do
+        dst="$HOME/.$(basename "${src%.*}")"
+        link_file "$src" "$dst"
+    done
+}
+
+install_antigen () {
+    info 'installing antigen'
+
+    if [ ! -d "$ANTIGEN_ROOT" ]
+    then
+        git clone https://github.com/zsh-users/antigen.git "$ANTIGEN_ROOT"
+    fi
+    success "installed antigen"
+}
+
+install_git
+setup_gitconfig
+install_antigen
+install_dotfiles
+
+zsh
+
+echo ''
+echo '  All installed!'
