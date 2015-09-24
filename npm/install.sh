@@ -15,6 +15,10 @@ then
 
         git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
 
+        # Add path to nvm so installation can finish
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
         # Install latest stable version of npm and node
         nvm install stable
         nvm use stable
