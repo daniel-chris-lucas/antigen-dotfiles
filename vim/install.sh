@@ -5,7 +5,7 @@
 # This installs vim.
 
 # Check for vim
-brew --version 2>&1 >/dev/null
+vim --version 2>&1 >/dev/null
 VIM_IS_AVAILABLE=$?
 if [ ! $VIM_IS_AVAILABLE -eq 0 ]
 then
