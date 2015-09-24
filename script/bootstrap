@@ -32,7 +32,7 @@ install_git () {
     then
         if [ "$(uname -s)" == $UNAME_MAC ]
         then
-            # do something
+            echo "  Missing git installation for Mac"
         elif [ "$(uname -s)" == *ARCH ]
         then
             sudo pacman -S git
@@ -159,7 +159,8 @@ setup_gitconfig
 install_antigen
 install_dotfiles
 
-zsh
-
 echo ''
 echo '  All installed!'
+cd "$HOME"
+
+zsh

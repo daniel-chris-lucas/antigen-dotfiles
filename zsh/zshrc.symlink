@@ -21,10 +21,14 @@ antigen theme ys
 # Tell antigen you're done
 antigen apply
 
+# if [ -d "$HOME/.linuxbrew" ]
+#     export PATH="$PATH:$HOME/.linuxbrew/bin"
+# fi
+
 export NVM_DIR="/home/dan/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-export PATH="$PATH:$HOME/.rvm/bin:$HOME/.composer/vendor/bin" # Add RVM to PATH for scripting
+export PATH="$PATH:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:$HOME/.linuxbrew/bin" # Add RVM to PATH for scripting
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 [[ -r "$HOME/.rvm/scripts/completion" ]] && source "$HOME/.rvm/scripts/completion"
