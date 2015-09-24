@@ -7,7 +7,7 @@
 # Check for vim
 brew --version 2>&1 >/dev/null
 VIM_IS_AVAILABLE=$?
-if [ ! $VIMIS_AVAILABLE -eq 0 ]
+if [ ! $VIM_IS_AVAILABLE -eq 0 ]
 then
     echo "  Installing Vim for you."
 
