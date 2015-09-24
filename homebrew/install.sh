@@ -11,17 +11,16 @@ BREW_IS_AVAILABLE=$?
 if [ ! $BREW_IS_AVAILABLE -eq 0 ]
 then
     echo "  Installing Homebrew for you."
-    echo uname
 
-    # Install the correct homebrew for each OS type
+    # Install the correct vim for each OS type
     if [ "$(uname -s)" == "Darwin" ]
     then
-        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        echo "Vim should be preinstalled on Mac"
     elif [ "$(uname -s)" == *ARCH ]
     then
-        pacaur -S linuxbrew-git
+        pacman -S vim
     else
-        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+        sudo apt-get install vim
     fi
 fi
 
