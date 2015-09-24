@@ -2,6 +2,7 @@
 #
 # bootstrap installs things.
 
+CURRENT_DIR=$(pwd)
 cd "$(dirname "$0")/.."
 DOTFILES_ROOT=$(pwd)
 ANTIGEN_ROOT=$HOME/.antigen
@@ -161,6 +162,6 @@ install_dotfiles
 
 echo ''
 echo '  All installed!'
-cd "$HOME"
+cd "$CURRENT_DIR"
 
 zsh
