@@ -37,6 +37,9 @@ antigen bundles <<EOBUNDLES
     # Git helpers and autocompletion
     git
 
+    # Git flow helpers and autocompletion
+    git-flow
+
     # Syntax highlighting
     zsh-users/zsh-syntax-highlighting
 EOBUNDLES
