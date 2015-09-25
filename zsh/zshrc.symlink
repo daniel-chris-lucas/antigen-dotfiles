@@ -51,9 +51,6 @@ antigen apply
 #     export PATH="$PATH:$HOME/.linuxbrew/bin"
 # fi
 
-export PATH="$PATH:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:$HOME/.linuxbrew/bin" # Add RVM to PATH for scripting
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-[[ -r "$HOME/.rvm/scripts/completion" ]] && source "$HOME/.rvm/scripts/completion"
+export PATH="$PATH:$HOME/.composer/vendor/bin:$HOME/.linuxbrew/bin"
 
 unset config_files
