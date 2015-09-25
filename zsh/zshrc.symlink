@@ -47,6 +47,4 @@ antigen theme ys
 # Tell antigen you're done
 antigen apply
 
-export PATH="$PATH:$HOME/.composer/vendor/bin"
-
 unset config_files
