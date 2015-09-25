@@ -7,10 +7,10 @@ fi
 # grc overides for ls
 # Made possible through contributions from generous benefactors like
 # `brew install coreutils`
-if $(gls &>/dev/null)
-then
+# if $(gls &>/dev/null)
+# then
 #     alias ls="gls -F --color=auto"
-    alias l="gls -lAhG"
-    alias ll="gls -lG"
-    alias la='gls -AG'
-fi
+#     alias l="gls -lAhC"
+#     alias ll="gls -lG"
+#     alias la='gls -AG'
+# fi
