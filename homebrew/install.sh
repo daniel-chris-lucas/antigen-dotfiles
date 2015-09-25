@@ -21,10 +21,18 @@ then
         elif [ "$(uname -s)" == *ARCH ]
         then
             pacaur -S linuxbrew-git
+            export PATH="$PATH:$HOME/.linuxbrew/bin"
         else
             ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+            export PATH="$PATH:$HOME/.linuxbrew/bin"
         fi
     fi
 fi
+
+# Initialize homebrew
+brew doctor
+
+# Install homebrew packages
+brew install grc coreutils spark
 
 exit 0
