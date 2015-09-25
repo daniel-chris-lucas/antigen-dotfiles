@@ -14,15 +14,15 @@ then
     then
         echo "  Installing Homebrew for you."
 
-        # Install the correct vim for each OS type
+        # Install the correct homebrew for each OS type
         if [ "$(uname -s)" == "Darwin" ]
         then
-            echo "Vim should be preinstalled on Mac"
+            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
         elif [ "$(uname -s)" == *ARCH ]
         then
-            pacman -S vim
+            pacaur -S linuxbrew-git
         else
-            sudo apt-get install vim
+            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
         fi
     fi
 fi
