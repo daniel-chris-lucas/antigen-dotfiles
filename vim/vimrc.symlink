@@ -1,3 +1,7 @@
+set nocompatible                               "We want the latest Vim settings/options.
+
+so ~/.dotfiles/vim/plugins.vim
+
 syntax enable
 
 set backspace=indent,eol,start                 "Make backspace behave like every other editor.
@@ -46,6 +50,9 @@ nmap <C-L> <C-W><C-L>
 "Make it easy to edit Vimrc file.
 nmap <Leader>ev :tabedit $MYVIMRC<cr>
 nmap <Leader><space> :nohlsearch<cr>
+
+"Make NERDTree easier to toggle.
+nmap <D-1> :NERDTreeToggle<cr>
 
 
 
